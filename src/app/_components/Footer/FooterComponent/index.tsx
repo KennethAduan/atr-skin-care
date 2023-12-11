@@ -21,7 +21,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
       <Gutter>
         <ul className={classes.inclusions}>
           {inclusions.map(inclusion => (
-            <li key={inclusion.title}>
+            <div key={inclusion.title}>
               <Image
                 src={inclusion.icon}
                 alt={inclusion.title}
@@ -32,7 +32,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
 
               <h5 className={classes.title}>{inclusion.title}</h5>
               <p>{inclusion.description}</p>
-            </li>
+            </div>
           ))}
         </ul>
       </Gutter>
@@ -41,7 +41,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
         <Gutter>
           <div className={classes.wrap}>
             <Link href="/">
-              <Image src="/logo-white.svg" alt="logo" width={170} height={50} />
+              <Image src="/ATR_LOGO.png" alt="logo" width={80} height={50} />
             </Link>
 
             <p>{footer?.copyright}</p>
