@@ -1,0 +1,21 @@
+// Add this to your SCSS file, assuming you have already imported queries.scss
+
+.nav {
+    display: flex;
+    flex-direction: column; /* Change this line to make it display in a column position */
+    gap: calc(var(--base) / 2) var(--base);
+    align-items: center;
+    opacity: 1;
+    transition: opacity 100ms linear;
+    visibility: visible;
+  
+    > * {
+      text-decoration: none;
+    }
+  }
+  
+  .hide {
+    opacity: 0;
+    visibility: hidden;
+  }
+  

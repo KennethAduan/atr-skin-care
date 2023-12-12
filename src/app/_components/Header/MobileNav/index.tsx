@@ -11,7 +11,7 @@ import { CMSLink } from '../../Link'
 
 import classes from './index.module.scss'
 
-export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
+export const MobileNav: React.FC<{ header: HeaderType }> = ({ header }) => {
   const navItems = header?.navItems || []
   const { user } = useAuth()
 
