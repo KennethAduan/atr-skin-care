@@ -12,7 +12,9 @@
   > * {
     text-decoration: none;
   }
-  
+  @include small-break {
+    display: none; // hide the navigation on mobile
+  }
   
 }
  
