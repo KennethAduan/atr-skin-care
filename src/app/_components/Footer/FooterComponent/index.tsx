@@ -30,7 +30,7 @@ const FooterComponent = ({ footer }: { footer: Footer }) => {
                 className={classes.icon}
               />
 
-              <h5 className={classes.title}>{inclusion.title}</h5>
+              <h5 className="font-bold">{inclusion.title}</h5>
               <p>{inclusion.description}</p>
             </div>
           ))}
