@@ -77,10 +77,13 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
             />
           </div>
         </div>
+
+        <p className="text-xs">200 pieces available</p>
       </div>
 
       <div className={classes.subtotalWrapper}>
         <Price product={product} button={false} quantity={quantity} />
+
         <RemoveFromCartButton product={product} />
       </div>
     </li>

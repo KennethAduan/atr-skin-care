@@ -23,7 +23,7 @@ export const ProductHero: React.FC<{
       </div>
 
       <div className={classes.details}>
-        <h3 className={classes.title}>{title}</h3>
+        <h3 className="text-4xl font-bold">{title}</h3>
 
         <div className={classes.categoryWrapper}>
           <div className={classes.categories}>
@@ -47,7 +47,7 @@ export const ProductHero: React.FC<{
         <Price product={product} button={false} />
 
         <div className={classes.description}>
-          <h6>Description</h6>
+          <h6 className="mb-4 text-lg font-bold">Description</h6>
           <p>{description}</p>
         </div>
 
