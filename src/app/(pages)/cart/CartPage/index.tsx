@@ -3,7 +3,7 @@
 import React, { Fragment } from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
-import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
 import Link from 'next/link'
 
 import { Page, Settings } from '../../../../payload/payload-types'
@@ -32,17 +32,23 @@ const style = {
   borderRadius: '10px',
 }
 interface ModalProps {
-  onConfirm: (type: string) => void
+  onConfirm: (type: string, address?: string) => void
 }
 
 function DeliveryModal({ onConfirm }: ModalProps) {
   const [open, setOpen] = React.useState(false)
+  const [shippingAddress, setShippingAddress] = React.useState('')
+
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
+  const handleConfirm = () => {
+    onConfirm('Delivery', shippingAddress)
+    handleClose()
+  }
+
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Button onClick={handleOpen} label="Choose Delivery" appearance="secondary" />
       <Modal
         open={open}
@@ -50,13 +56,30 @@ function DeliveryModal({ onConfirm }: ModalProps) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box
+          sx={{
+            position: 'absolute' as 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            bgcolor: 'background.paper',
+            boxShadow: 24,
+            p: 4,
+            borderRadius: '10px',
+          }}
+        >
           <h1 className="text-lg font-bold">Shipping : Delivery</h1>
-          <p className="text-sm">
-            <span className="font-bold">Shipping Address:</span> 625 Rodriguez St. Pasay City
-            Barangay 135, Pasay City, Metro Manila, Metro Manila, 1304
-          </p>
-
+          <div className="mt-4">
+            <TextField
+              id="shipping-address"
+              label="Shipping Address"
+              variant="outlined"
+              fullWidth
+              value={shippingAddress}
+              onChange={e => setShippingAddress(e.target.value)}
+            />
+          </div>
           <div className="flex justify-end mt-8 space-x-3">
             <button
               onClick={handleClose}
@@ -65,10 +88,7 @@ function DeliveryModal({ onConfirm }: ModalProps) {
               cancel
             </button>
             <button
-              onClick={() => {
-                onConfirm('Delivery')
-                handleClose()
-              }}
+              onClick={handleConfirm}
               className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
             >
               confirm
@@ -85,9 +105,15 @@ function PickUpModal({ onConfirm }: ModalProps) {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
+  const pickupAddress =
+    '147, 10th Floor Medical Plaza Building, Amorsolo Street, Makati, 1200 Metro Manila'
+
+  const handleConfirm = () => {
+    onConfirm('Pick-up', pickupAddress)
+    handleClose()
+  }
   return (
     <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
       <Button onClick={handleOpen} label="Choose Pick-up" appearance="secondary" />
       <Modal
         open={open}
@@ -98,8 +124,7 @@ function PickUpModal({ onConfirm }: ModalProps) {
         <Box sx={style}>
           <h1 className="text-lg font-bold">Shipping : Pick-up</h1>
           <p className="text-sm">
-            <span className="font-bold">Pick-up Address:</span> 147, 10th Floor Medical Plaza
-            Building, Amorsolo Street, Makati, 1200 Metro Manila
+            <span className="font-bold">Pick-up Address:</span> {pickupAddress}
           </p>
 
           <p className="mt-4 text-sm">
@@ -114,10 +139,7 @@ function PickUpModal({ onConfirm }: ModalProps) {
               cancel
             </button>
             <button
-              onClick={() => {
-                onConfirm('Pick-up')
-                handleClose()
-              }}
+              onClick={handleConfirm}
               className="px-6 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
             >
               confirm
@@ -139,7 +161,8 @@ export const CartPage: React.FC<{
   const { user } = useAuth()
 
   const { cart, cartIsEmpty, addItemToCart, cartTotal, hasInitializedCart } = useCart()
-  const [shippingType, setShippingType] = React.useState('Please Select Shipping Type')
+  const [shippingType, setShippingType] = React.useState('Select Shipping')
+  const [shippingAddress, setShippingAddress] = React.useState('')
   return (
     <Fragment>
       <br />
@@ -212,16 +235,31 @@ export const CartPage: React.FC<{
 
               <div className={classes.summary}>
                 <div className="flex justify-around space-x-5">
-                  <DeliveryModal onConfirm={type => setShippingType(type)} />
-                  <PickUpModal onConfirm={type => setShippingType(type)} />
+                  <DeliveryModal
+                    onConfirm={(type, address) => {
+                      setShippingType(type)
+                      setShippingAddress(address)
+                    }}
+                  />
+                  <PickUpModal
+                    onConfirm={(type, address) => {
+                      setShippingType(type)
+                      setShippingAddress(address)
+                    }}
+                  />
                 </div>
                 <div className={classes.row}>
                   <h6 className={classes.cartTotal}>Summary</h6>
                 </div>
                 <div className={classes.row}>
                   <h6>Shipping: </h6>
-                  <h6>{shippingType}</h6>
+                  <h6 className="text-sm">{shippingType}</h6>
                 </div>
+                {shippingAddress && (
+                  <div className={classes.row}>
+                    <h6 className={classes.shippingText}>{shippingAddress}</h6>
+                  </div>
+                )}
                 {/* <div className={classes.row}>
                   <p>Delivery Charge</p>
                   <p>₱0</p>
