@@ -189,6 +189,7 @@ export interface Category {
 export interface Product {
   id: string;
   title: string;
+  stocks: number;
   publishedOn?: string;
   layout?: (
     | {
