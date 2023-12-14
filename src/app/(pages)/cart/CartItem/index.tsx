@@ -13,6 +13,7 @@ import classes from './index.module.scss'
 const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
   const [quantity, setQuantity] = useState(qty)
 
+  // console.log(product)
   const decrementQty = () => {
     const updatedQty = quantity > 1 ? quantity - 1 : 1
 
@@ -78,7 +79,7 @@ const CartItem = ({ product, title, metaImage, qty, addItemToCart }) => {
           </div>
         </div>
 
-        <p className="text-xs">200 pieces available</p>
+        <p className="text-xs">{product.stocks} pieces available</p>
       </div>
 
       <div className={classes.subtotalWrapper}>
